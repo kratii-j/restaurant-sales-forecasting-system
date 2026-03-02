@@ -1,0 +1,107 @@
+# ============================================================
+# minorProj – Restaurant Sales Forecasting Configuration
+# ============================================================
+
+# ── Project Metadata ─────────────────────────────────────────
+project:
+  name: "minorProj"
+  version: "1.0.0"
+  description: "Restaurant Sales Forecasting System"
+
+# ── Data Paths ───────────────────────────────────────────────
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  models_dir: "data/models"
+
+# ── Feature Engineering ──────────────────────────────────────
+features:
+  target_column: "sales"
+  date_column: "date"
+  categorical_columns:
+    - "day_of_week"
+    - "month"
+    - "is_holiday"
+    - "weather_condition"
+  numerical_columns:
+    - "temperature"
+    - "humidity"
+    - "footfall"
+    - "promotions"
+  lag_features:
+    - 1
+    - 7
+    - 14
+    - 30
+  rolling_window_sizes:
+    - 7
+    - 14
+    - 30
+
+# ── Train / Test Split ───────────────────────────────────────
+split:
+  test_size: 0.2
+  random_state: 42
+  time_series_split: true
+  n_splits: 5 # number of folds for TimeSeriesSplit
+
+# ── Model Hyperparameters ────────────────────────────────────
+models:
+  # ── Random Forest ──────────────────────────────────────────
+  random_forest:
+    n_estimators: 200
+    max_depth: 15
+    min_samples_split: 5
+    min_samples_leaf: 2
+    random_state: 42
+    n_jobs: -1
+
+  # ── XGBoost ────────────────────────────────────────────────
+  xgboost:
+    n_estimators: 300
+    max_depth: 8
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    reg_alpha: 0.1
+    reg_lambda: 1.0
+    random_state: 42
+    n_jobs: -1
+    objective: "reg:squarederror"
+    eval_metric: "rmse"
+
+  # ── LightGBM ───────────────────────────────────────────────
+  lightgbm:
+    n_estimators: 300
+    max_depth: 10
+    learning_rate: 0.05
+    num_leaves: 31
+    subsample: 0.8
+    colsample_bytree: 0.8
+    reg_alpha: 0.1
+    reg_lambda: 1.0
+    random_state: 42
+    n_jobs: -1
+    objective: "regression"
+    metric: "rmse"
+
+# ── Evaluation Metrics ───────────────────────────────────────
+evaluation:
+  metrics:
+    - "mae"
+    - "rmse"
+    - "mape"
+    - "r2"
+
+# ── API Configuration ────────────────────────────────────────
+api:
+  host: "0.0.0.0"
+  port: 8000
+  reload: true
+  log_level: "info"
+
+# ── Logging ──────────────────────────────────────────────────
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  log_file: "logs/app.log"
