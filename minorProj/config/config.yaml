@@ -37,6 +37,39 @@ features:
     - 7
     - 14
     - 30
+  # ── Static (Restaurant-Level) Features ───────────────────
+  static_features:
+    output_file: "data/processed/restaurant_features.csv"
+    boolean_flags:
+      - "has_table_booking"
+      - "has_online_delivery"
+      - "is_delivering_now"
+    top_cuisines:
+      - "North Indian"
+      - "Chinese"
+      - "Fast Food"
+      - "Cafe"
+      - "Bakery"
+      - "Mughlai"
+      - "Street Food"
+      - "South Indian"
+      - "Italian"
+      - "Continental"
+    derived_features:
+      - "cuisine_count"
+      - "cuisine_diversity"
+      - "log_cost"
+      - "cost_per_price_range"
+      - "is_high_cost"
+      - "rating_tier_encoded"
+      - "is_unrated"
+      - "rating_x_votes"
+      - "log_votes"
+      - "votes_per_cuisine"
+      - "is_popular"
+      - "city_restaurant_count"
+      - "city_freq"
+      - "is_india"
 
 # ── Train / Test Split ───────────────────────────────────────
 split:
