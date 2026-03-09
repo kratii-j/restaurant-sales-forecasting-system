@@ -1,0 +1,8 @@
+===== DATA QUALITY REPORT =====
+[Restaurant Dataset] Missing values: 9
+[Daily Orders] Missing values: 0
+[External Context] Missing values: 0
+[Restaurant Dataset] Duplicate IDs (Restaurant ID): 0
+[Daily Orders] Restaurants with missing dates: 0
+[Daily Orders] Column not found → skipped outlier check
+[Daily Orders] Column not found → skipped outlier check
