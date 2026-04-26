@@ -10,3 +10,5 @@ data/models/
 minorProj/data/raw/
 minorProj/data/processed/
 *.csv
+!sample_*.csv
+!**/sample_*.csv

@@ -23,13 +23,27 @@ class DataStore:
             cls._instance._loaded = False
         return cls._instance
 
+    def _read_csv_with_fallback(self, path: Path, sample_name: str):
+        if path.exists():
+            return pd.read_csv(path)
+        sample_path = path.parent / f"sample_{path.name}"
+        if sample_path.exists():
+            print(f"⚠️  File {path.name} not found. Using sample: {sample_path.name}")
+            return pd.read_csv(sample_path)
+        raise FileNotFoundError(f"Could not find {path.name} or its sample {sample_path.name}")
+
     def load(self):
         if self._loaded:
             return
-        print("⏳ Loading data into memory …")
+        print("⏳ Loading data ...")
 
         # Restaurant master
-        self.restaurants = pd.read_csv(RAW_DIR / "restaurant_dataset.csv", encoding="utf-8-sig")
+        try:
+            self.restaurants = pd.read_csv(RAW_DIR / "restaurant_dataset.csv", encoding="utf-8-sig")
+        except FileNotFoundError:
+            self.restaurants = pd.read_csv(RAW_DIR / "sample_restaurant_dataset.csv", encoding="utf-8-sig")
+            print("⚠️  Using sample restaurant_dataset.csv")
+
         self.restaurants.columns = (
             self.restaurants.columns.str.strip()
             .str.lower()
@@ -38,18 +52,13 @@ class DataStore:
         )
 
         # Daily orders
-        orders = pd.read_csv(RAW_DIR / "daily_orders.csv")
-        orders["date"] = pd.to_datetime(orders["date"])
-        self.orders = orders
+        self.orders = self._read_csv_with_fallback(RAW_DIR / "daily_orders.csv", "sample_daily_orders.csv")
+        self.orders["date"] = pd.to_datetime(self.orders["date"])
 
-        # Restaurant performance
-        self.performance = pd.read_csv(PROCESSED_DIR / "restaurant_performance.csv")
-
-        # Model comparison
-        self.model_comparison = pd.read_csv(PROCESSED_DIR / "model_comparison_summary.csv")
-
-        # Restaurant analysis summary
-        self.analysis_summary = pd.read_csv(PROCESSED_DIR / "restaurant_analysis_summary.csv")
+        # Remaining
+        self.performance = self._read_csv_with_fallback(PROCESSED_DIR / "restaurant_performance.csv", "sample_restaurant_performance.csv")
+        self.model_comparison = self._read_csv_with_fallback(PROCESSED_DIR / "model_comparison_summary.csv", "sample_model_comparison_summary.csv")
+        self.analysis_summary = self._read_csv_with_fallback(PROCESSED_DIR / "restaurant_analysis_summary.csv", "sample_restaurant_analysis_summary.csv")
 
         self._precompute()
         self._loaded = True
