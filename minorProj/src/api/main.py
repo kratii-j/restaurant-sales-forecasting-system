@@ -6,8 +6,8 @@ import pandas as pd
 from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from .data_loader import get_store
-from .schemas import PredictionRequest
+from src.api.data_loader import get_store
+from src.api.schemas import PredictionRequest
 
 app = FastAPI(
     title="DineCast API",
