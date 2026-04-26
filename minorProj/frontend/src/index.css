@@ -1,0 +1,327 @@
+:root {
+  --bg: #000000;
+  --bg-card: #0a0a0a;
+  --bg-hover: #111111;
+  --border: #1a1a1a;
+  --border-hover: #2a2a2a;
+  --text: #ffffff;
+  --text-muted: #666666;
+  --text-secondary: #999999;
+  --accent: #10b981;
+  --accent-dim: #065f46;
+  --danger: #ef4444;
+  --danger-dim: #7f1d1d;
+  --warning: #f59e0b;
+  --warning-dim: #78350f;
+  --info: #3b82f6;
+  --font: 'JetBrains Mono', monospace;
+  --tracking: -0.02em;
+  --sidebar-width: 220px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  letter-spacing: var(--tracking);
+  line-height: 1.5;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root { display: flex; min-height: 100vh; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+input, select, textarea {
+  font-family: var(--font);
+  font-size: 13px;
+  letter-spacing: var(--tracking);
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+input:focus, select:focus { border-color: var(--accent); }
+
+button {
+  font-family: var(--font);
+  font-size: 13px;
+  letter-spacing: var(--tracking);
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  padding: 8px 16px;
+  transition: all 0.15s;
+}
+button:hover { background: var(--bg-hover); border-color: var(--border-hover); }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+button.primary {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+  font-weight: 600;
+}
+button.primary:hover { background: #0ea371; }
+
+/* ── Page Layout ──────────────────────────────────────── */
+.page { max-width: 1200px; width: 100%; }
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  letter-spacing: -0.03em;
+}
+.page-loading {
+  color: var(--text-muted);
+  padding: 40px 0;
+}
+.section-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+/* ── KPI Cards ────────────────────────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.kpi-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.kpi-value {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+.kpi-delta { font-size: 12px; }
+.kpi-delta.up { color: var(--accent); }
+.kpi-delta.down { color: var(--danger); }
+.kpi-delta.neutral { color: var(--text-muted); }
+
+/* ── Charts ───────────────────────────────────────────── */
+.chart-section { margin-bottom: 28px; }
+.chart-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 16px;
+}
+
+/* ── Table ────────────────────────────────────────────── */
+.table-section { margin-bottom: 28px; }
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.table-header .section-title { margin-bottom: 0; }
+.table-wrap { overflow-x: auto; }
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+.data-table th {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  user-select: none;
+}
+.data-table td {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.data-table tbody tr:hover { background: var(--bg-hover); }
+.sort-indicator { color: var(--accent); }
+
+/* ── Badges ───────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.badge-low { color: var(--accent); border: 1px solid var(--accent-dim); }
+.badge-medium { color: var(--warning); border: 1px solid var(--warning-dim); }
+.badge-high { color: var(--danger); border: 1px solid var(--danger-dim); }
+
+/* ── Pagination ───────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+.page-info { font-size: 12px; color: var(--text-muted); }
+
+/* ── Stats Row ────────────────────────────────────────── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+.stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+.stat-value { font-size: 24px; font-weight: 700; }
+.stat-value.accent { color: var(--accent); }
+.stat-value.warning { color: var(--warning); }
+.stat-value.danger { color: var(--danger); }
+
+/* ── Forecasting Page ─────────────────────────────────── */
+.form-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+}
+.form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.form-label select,
+.form-label input[type="date"],
+.form-label input[type="number"] {
+  min-width: 160px;
+}
+.checkbox-label {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px !important;
+  color: var(--text);
+  text-transform: none;
+  font-size: 13px;
+}
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+.prediction-result { margin-bottom: 24px; }
+.pred-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.pred-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pred-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+.pred-value { font-size: 28px; font-weight: 700; letter-spacing: -0.04em; }
+.pred-ci { font-size: 12px; color: var(--text-secondary); }
+
+/* ── Restaurant Explorer ──────────────────────────────── */
+.explorer-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.explorer-controls input,
+.explorer-controls select { flex: 1; max-width: 300px; }
+
+.restaurant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.restaurant-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.restaurant-card:hover { border-color: var(--border-hover); }
+.restaurant-card.expanded { border-color: var(--accent); }
+.rc-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.rc-city { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 4px; }
+.rc-cuisines { font-size: 11px; color: var(--text-secondary); margin-bottom: 10px; }
+.rc-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+.rc-meta span { display: flex; align-items: center; gap: 4px; }
+.rc-rating { color: var(--warning); }
+.rc-tag {
+  display: inline-block;
+  font-size: 10px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  margin-right: 4px;
+}
+.rc-detail {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Model Performance ────────────────────────────────── */
+.model-best { color: var(--accent); font-weight: 600; }
